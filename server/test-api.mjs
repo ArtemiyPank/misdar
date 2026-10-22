@@ -73,6 +73,9 @@ r = await s2('/api/mark', { status: 'present' }); assert.equal(r.status, 409);
 // open: non-leader forbidden, leader ok
 r = await s2('/api/open', {}); assert.equal(r.status, 403);
 r = await s1('/api/open', {}); assert.equal(r.status, 200); assert.ok(r.json.rollcall); assert.equal(r.json.rollcall.opened_by, 'Вася Пупкин');
+assert.equal(r.json.users.find(u => u.id === '101').status, 'present', 'открывший отмечен автоматически');
+assert.equal(r.json.users.find(u => u.id === '102').status, null);
+r = await s1('/api/mark', { status: null }); assert.equal(r.json.users.find(u => u.id === '101').status, null, 'открывший может отменить');
 r = await s1('/api/open', {}); assert.equal(r.status, 409, 'already open');
 r = await s2('/api/state?v=' + v); assert.equal(r.status, 200, 'version bumped');
 // marks
