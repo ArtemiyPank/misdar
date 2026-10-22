@@ -26,8 +26,8 @@
 
 ```bash
 # 1. Код на сервер (от root)
-git clone https://github.com/<user>/misdar.git /opt/misdar-src
-#    (если нет git: curl -L https://github.com/<user>/misdar/archive/refs/heads/main.tar.gz | tar xz -C /opt && mv /opt/misdar-main /opt/misdar-src)
+git clone https://github.com/ArtemiyPank/misdar.git /opt/misdar-src
+#    (если нет git: curl -L https://github.com/ArtemiyPank/misdar/archive/refs/heads/main.tar.gz | tar xz -C /opt && mv /opt/misdar-main /opt/misdar-src)
 
 # 2. Осмотр — ничего не меняет. Вывод пришли мне перед деплоем
 bash /opt/misdar-src/server/inspect.sh
