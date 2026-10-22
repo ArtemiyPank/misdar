@@ -1,0 +1,14 @@
+{
+  "name": "misdar",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Учёт присутствия на построении — Cloudflare Worker",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "latest"
+  },
+  "type": "module"
+}

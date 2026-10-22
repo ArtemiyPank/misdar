@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "misdar",
+  "main": "index.js",
+  "compatibility_date": "2026-01-01",
+  "workers_dev": true,
+  "durable_objects": {
+    "bindings": [{ "name": "ROLLCALL", "class_name": "RollCall" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["RollCall"] }],
+  "observability": { "enabled": true }
+}
