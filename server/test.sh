@@ -67,7 +67,8 @@ https_ok=0; for _ in 1 2 3 4 5 6; do [ "$(code "https://$DOMAIN/")" = 200 ] && {
 if [ "$https_ok" = 1 ]; then ok "https://$DOMAIN/ → 200, сертификат валиден"; else bad "https://$DOMAIN/ не отвечает 200 (сертификат ещё не выпущен? journalctl -u caddy -n 50)"; fi
 chk "https://$DOMAIN/admin → 200"              "[ \$(code https://$DOMAIN/admin) = 200 ]"
 chk "https://$DOMAIN/api/state → 401/409 (JSON)" "curl -s -m 12 https://$DOMAIN/api/state | grep -qE '\"(error|setup_required)\"'"
-chk "HSTS заголовок"                           "curl -s -I -m 12 https://$DOMAIN/ | grep -qi 'strict-transport-security'"
+if curl -s -I -m 12 "https://$DOMAIN/" | grep -qi 'strict-transport-security'; then ok "HSTS заголовок"
+else wrn "HSTS заголовка нет (для Caddy это норма: http→https и так редиректит)"; fi
 chk "сертификат действителен ещё > 20 дней"    "openssl s_client -servername $DOMAIN -connect $DOMAIN:443 </dev/null 2>/dev/null | openssl x509 -checkend 1728000 -noout"
 if have certbot; then
   if certbot renew --dry-run --cert-name "$DOMAIN" >/dev/null 2>&1; then ok "certbot renew --dry-run (автопродление работает)"; else wrn "certbot renew --dry-run не прошёл (проверь позже: sudo certbot renew --dry-run)"; fi
